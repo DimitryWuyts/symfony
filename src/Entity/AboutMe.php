@@ -14,24 +14,28 @@ class AboutMe
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
-    private $name = 'Dimitry';
-    private $text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+    private $name = "unknown";
 
-    public function getId(): ?int
+    public function showName(): string
     {
-    return $this->id;
+        return $this->name;
+
     }
-    public function getText(): ?string
+    public function typedName(): string
     {
-        return $this->text;
-    }
-    public function getName(): ?string
-    {
+        if(isset($_POST['name'])){
+            $_SESSION['TheName']=$_POST['name'];
+            $this->name= $_POST['name'];
+        }
+        elseif (isset($_SESSION['TheName'])){
+
+            $this->name=$_SESSION['TheName'];
+        }
+        else{
+
+            $this->name= $this->showName();
+        }
+
         return $this->name;
     }
 }
-
-
-
-
